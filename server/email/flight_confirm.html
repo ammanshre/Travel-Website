@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Details</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2, h3 {
+      color: #28a745; /* Green color */
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    strong {
+      font-weight: 500;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .segment {
+      background-color: #f1f1f1;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Booking Details</h1>
+  <section class="section">
+    <p><strong>Booking Reference:</strong> <%= bookingDetails.data.associatedRecords[0].reference %></p>
+    <p><strong>Creation Date:</strong> <%= bookingDetails.data.associatedRecords[0].creationDate %></p>
+  </section>
+
+  <h2>Flight Details</h2>
+  <% bookingDetails.data.flightOffers[0].itineraries.forEach(function(itinerary, index) { %>
+    <section class="section">
+      <h3>Flight <%= index + 1 %>:</h3>
+      <% itinerary.segments.forEach(function(segment) { %>
+        <div class="segment">
+          <ul>
+            <li><strong>Date:</strong> <%= segment.departure.at %></li>
+            <li><strong>Time:</strong> <%= segment.departure.at %></li>
+            <li><strong>From:</strong> <%= segment.departure.iataCode %></li>
+            <li><strong>To:</strong> <%= segment.arrival.iataCode %></li>
+            <li><strong>Flight Number:</strong> <%= segment.carrierCode %><%= segment.number %></li>
+            <li><strong>Aircraft:</strong> <%= segment.aircraft.code %></li>
+            <li><strong>Duration:</strong> <%= segment.duration %></li>
+            <li><strong>CO2 Emissions:</strong> <%= segment.co2Emissions[0].weight %> KG (Economy)</li>
+          </ul>
+        </div>
+      <% }); %>
+    </section>
+  <% }); %>
+
+  <h2>Price</h2>
+  <section class="section">
+    <ul>
+      <li><strong>Currency:</strong> <%= bookingDetails.data.flightOffers[0].price.currency %></li>
+      <li><strong>Total:</strong> <%= bookingDetails.data.flightOffers[0].price.total %></li>
+      <li><strong>Base:</strong> <%= bookingDetails.data.flightOffers[0].price.base %></li>
+    </ul>
+  </section>
+  <h2>Travelers</h2>
+  <% bookingDetails.data.travelers.forEach(function(traveler, index) { %>
+    <section class="section">
+      <h3>Traveler <%= index + 1 %>:</h3>
+      <ul>
+        <li><strong>First Name:</strong> <%= traveler.firstName %></li>
+        <li><strong>Last Name:</strong> <%= traveler.lastName %></li>
+        <li><strong>Date of Birth:</strong> <%= traveler.dateOfBirth %></li>
+        <li><strong>Gender:</strong> <%= traveler.gender %></li>
+        <% if (traveler.documents && traveler.documents.length > 0) { %>
+          <li><strong>Passport Number:</strong> <%= traveler.documents[0].number %></li>
+          <li><strong>Issuance Date:</strong> <%= traveler.documents[0].issuanceDate %></li>
+          <li><strong>Expiry Date:</strong> <%= traveler.documents[0].expiryDate %></li>
+          <li><strong>Issuance Country:</strong> <%= traveler.documents[0].issuanceCountry %></li>
+        <% } %>
+      </ul>
+    </section>
+  <% }); %>
+
+  <h2>Contact Person</h2>
+  <section class="section">
+    <ul>
+      <li><strong>Name:</strong> <%= bookingDetails.data.contacts[0].addresseeName.firstName %> <%= bookingDetails.data.contacts[0].addresseeName.lastName %></li>
+      <li><strong>Email:</strong> <%= bookingDetails.data.contacts[0].emailAddress %></li>
+      <li><strong>Phone:</strong> <%= bookingDetails.data.contacts[0].phones[0].number %></li>
+    </ul>
+  </section>
+</body>
+</html>
