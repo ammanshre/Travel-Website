@@ -395,7 +395,13 @@ const payFlight = async (email, amountInMUR) => {
 
 const getFlightBookingsByUserId = async (userId) => {
   try {
-    const bookings = await FlightBooking.find({ 'user.id': userId }).exec();
+
+    console.log("Fetching bookings for user:", userId);
+    const bookings = await FlightBooking.find({ 'user.id': userId });
+    const testBookings = await FlightBooking.find({});
+    console.log("Test Bookings found:", testBookings);
+    console.log("Bookings found:", bookings.length);
+    
     return bookings;
   } catch (error) {
     console.error("Error fetching bookings:", error);

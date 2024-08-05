@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DatePicker } from "@/components/ui/DatePicker";  // Assuming DatePicker is in the same directory
+import { CalendarDatePicker } from "@/components/ui/calender-date-picker";
 
 interface TravelerFormProps {
   onFormSubmit: (formData: TravelerData) => void;
@@ -111,9 +111,9 @@ export default function TravelersForm({ onFormSubmit }: TravelerFormProps) {
     onFormSubmit({ ...formData, contact: { ...formData.contact, phones: formData.contact.phones.map(phone => ({ ...phone, [name]: value })) } });
   };
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      const newDate = date.toISOString().split("T")[0];
+  const handleDateChange = (date: { from: Date | null }) => {
+    if (date.from) {
+      const newDate = date.from.toISOString().split("T")[0];
       setFormData((prevData) => ({
         ...prevData,
         dateOfBirth: newDate
@@ -152,9 +152,16 @@ export default function TravelersForm({ onFormSubmit }: TravelerFormProps) {
         <div className="flex flex-wrap gap-4 mt-4">
           <div className="flex-1">
             <Label htmlFor="dateOfBirth">Date of Birth</Label>
-           <div>
-           <DatePicker selected={new Date(formData.dateOfBirth)} onSelect={handleDateChange} />
-           </div>
+            <div>
+              <CalendarDatePicker
+                date={{ from: new Date(formData.dateOfBirth), to: new Date(formData.dateOfBirth) }}
+                onDateSelect={handleDateChange}
+                variant="outline"
+                yearsRange={300}
+                numberOfMonths={1}
+                className="min-w-[250px]"
+              />
+            </div>
           </div>
         </div>
       </div>
