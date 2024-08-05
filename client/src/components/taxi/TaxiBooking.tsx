@@ -132,7 +132,7 @@ const TaxiBookingDetails: React.FC<TaxiBookingDetailsProps> = ({ booking }) => {
               </div>
               <div className="grid gap-1">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Rate per km</div>
-                <div className="font-medium">${booking.taxi.ratePerKm.toFixed(2)}</div>
+                <div className="font-medium">Rs {booking.taxi.ratePerKm.toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -145,7 +145,7 @@ const TaxiBookingDetails: React.FC<TaxiBookingDetailsProps> = ({ booking }) => {
               </div>
               <div className="grid gap-1">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Fare</div>
-                <div className="font-medium">${booking.fare.toFixed(2)}</div>
+                <div className="font-medium">Rs {booking.fare.toFixed(2)}</div>
               </div>
             </div>
           </div>

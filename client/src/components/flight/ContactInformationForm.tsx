@@ -178,7 +178,7 @@ export default function ContactInformationForm({ onFormSubmit }: ContactInformat
               id="addressLine"
               name="lines"
               type="text"
-              value={formData.address.lines[0]}
+              value={formData.address.lines}
               onChange={handleAddressChange}
               placeholder="Address Line"
             />
